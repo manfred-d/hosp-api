@@ -1,0 +1,19 @@
+{
+  "name": "hosp-api",
+  "version": "1.0.0",
+  "description": "hospital api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Domains18/hosp-api.git"
+  },
+  "author": "Domains18",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Domains18/hosp-api/issues"
+  },
+  "homepage": "https://github.com/Domains18/hosp-api#readme"
+}
