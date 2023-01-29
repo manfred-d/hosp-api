@@ -2,10 +2,10 @@
   "name": "hosp-api",
   "version": "1.0.0",
   "description": "hospital api",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.ts",
-    "dev": "nodemon index.ts"
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
   },
   "repository": {
     "type": "git",
