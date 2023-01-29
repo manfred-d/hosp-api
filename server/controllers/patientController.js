@@ -39,5 +39,6 @@ const newPatient = asyncHandler(async (req, res) => {
 
     //check if patient has visited before
     const checkVisit = patientSchema.find({ NationalId: NationalId });
-    
+    if (checkVisit) { }
+
 });
