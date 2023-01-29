@@ -21,10 +21,10 @@ const newPatient = asyncHandler(async (req, res) => {
             res.status(400);
             throw new Error("Please Enter patient gender");
             break;
-        case !patientPhone:
-            res.status(400);
-            throw new Error("Please enter patient phone number");
-            break;
+        // case !patientPhone:
+        //     res.status(400);
+        //     throw new Error("Please enter patient phone number");
+        //     break;
         // case !patientEmail:
         //     res.status(400);
         //     throw new Error("Please enter patient email");
@@ -36,4 +36,8 @@ const newPatient = asyncHandler(async (req, res) => {
         default:
             break;
     }
+
+    //check if patient has visited before
+    const checkVisit = patientSchema.find({ NationalId: NationalId });
+    
 });

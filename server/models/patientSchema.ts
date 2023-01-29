@@ -32,6 +32,13 @@ const patientSchema = new Schema({
     },
     visitedBefore: {
         type: Boolean,
-        required: true
+        required: true,
+        default: false,
+        visited: {
+            type: Date,
+            Reason: {
+                type: String,
+            }
+        }
     }
 });
