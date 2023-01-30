@@ -35,5 +35,14 @@ const newPatient = asyncHandler(async (req, res) => {
         return res.status(300).json({ message: "failed to update or create patient", error });
     }
 });
-
+// delete patient
+const deletePatient = asyncHandler(async (req, res) => {
+    const { nationalId } = req.body;
+    try {
+        const patientToDelete = await Patient.deleteOne({ nationalId });
+    } catch (error) {
+        return res.status(408);
+        res.json({ message: "failed to delete patient", error });
+    }
+});
 module.exports = { newPatient };
