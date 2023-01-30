@@ -42,6 +42,8 @@ const newPatient = asyncHandler(async (req, res) => {
     if (checkVisit) {
         res.status(203);
         res.send("Patient has visited before");
+        //update latest visit
+        const lastVisit = patientSchema.findOneAndUpdate({}, {$set: {visitedBefore: true, "visitedBefore.Date" : new Date()}})
     } else {
         const patient = new Patient({
             patientName,
@@ -53,7 +55,7 @@ const newPatient = asyncHandler(async (req, res) => {
             visitedBefore
         });
         const createdPatient = await patient.save();
-        res.status(201).json(createdPatient);
+        res.status(201).json("Patient Details recorded Successfully");
     }
 
 });

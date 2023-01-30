@@ -34,19 +34,9 @@ const patientSchema = new Schema({
         type: Boolean,
         required: true,
         default: false,
-        visited: [{
-            date: {
-                type: Date,
-                required: true
-            },
-            doctor: {
-                type: String,
-                required: true
-            },
-            reason: {
-                type: String,
-                required: true
-            }
-        }]
+        Date: {
+            type: Date,
+            required: true
+        }
     }
 });
