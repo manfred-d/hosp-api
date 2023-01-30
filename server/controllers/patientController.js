@@ -25,6 +25,11 @@ const newPatient = asyncHandler(async (req, res) => {
                 });
             return res.status(200).json({ message: 'Patient updated successfully' });
         }
+        //create new patient
+        const patient = await Patient.create({
+            patientAge, patientEmail, patientGender, patientName, patientPhone, nationalId, visitedBefore: {Date: new Date()}
+        });
+        await patient.save();
     } catch (error) {
 
     }
