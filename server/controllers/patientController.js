@@ -27,11 +27,13 @@ const newPatient = asyncHandler(async (req, res) => {
         }
         //create new patient
         const patient = await Patient.create({
-            patientAge, patientEmail, patientGender, patientName, patientPhone, nationalId, visitedBefore: {Date: new Date()}
+            patientAge, patientEmail, patientGender, patientName, patientPhone, nationalId, visitedBefore: { Date: new Date() }
         });
         await patient.save();
         res.status(201).json({ message: 'Patient created successfully' });
     } catch (error) {
-        return res.status(300).json({ message: "failed to update or create patient", error});
+        return res.status(300).json({ message: "failed to update or create patient", error });
     }
 });
+
+module.exports = { newPatient };
