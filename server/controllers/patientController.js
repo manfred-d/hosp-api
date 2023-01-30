@@ -9,7 +9,7 @@ const newPatient = asyncHandler(async (req, res) => {
             res.status(400);
             throw new Error("Please enter patient name");
             break;
-        case !NationalId:
+        case !nationalId:
             res.status(400);
             throw new Error("Please enter patient national id");
             break;
@@ -38,7 +38,22 @@ const newPatient = asyncHandler(async (req, res) => {
     }
 
     //check if patient has visited before
-    const checkVisit = patientSchema.find({ NationalId: NationalId });
-    if (checkVisit) { }
+    const checkVisit = patientSchema.find({ nationalId: nationalId });
+    if (checkVisit) {
+        res.status(203);
+        res.send("Patient has visited before");
+    } else {
+        const patient = new Patient({
+            patientName,
+            nationalId,
+            patientAge,
+            patientGender,
+            patientPhone,
+            patientEmail,
+            visitedBefore
+        });
+        const createdPatient = await patient.save();
+        res.status(201).json(createdPatient);
+    }
 
 });
