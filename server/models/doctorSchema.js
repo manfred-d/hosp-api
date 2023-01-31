@@ -40,5 +40,5 @@ const doctorSchema = new Schema({
     }
 });
 
-const Doctor = mongoose.model("Doctor", doctorSchema);
-module.exports = Doctor;
+const doctor = mongoose.model("Doctor", doctorSchema);
+module.exports = doctor;

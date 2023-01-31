@@ -12,6 +12,7 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 server.use(errorHandler);
+server.use(express.static(path.join(__dirname, "client/build")));
 
 
 server.listen(PORT, ()=>{ console.log(`Listening on port ${PORT}`)});

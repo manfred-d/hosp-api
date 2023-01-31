@@ -30,6 +30,10 @@ const patientSchema = new Schema({
         type: String,
         required: false
     },
+    nhifNumber: {
+        type: Number,
+        required: false
+    },
     visitedBefore: {
         type: Boolean,
         required: true,

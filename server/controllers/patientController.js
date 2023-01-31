@@ -6,7 +6,7 @@ const newPatient = asyncHandler(async (req, res) => {
 
     //validate input data
 
-    if (!patientName || !nationalId || !patientAge || !patientGender || !patientPhone || !patientEmail || !visitedBefore) {
+    if (!patientName || !nationalId || !patientAge || !patientGender || !patientPhone || !patientEmail || !visitedBefore ) {
         res.status(400);
         throw new Error('Please fill all fields');
     }
