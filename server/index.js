@@ -1,10 +1,12 @@
 //making the hospital api
 const express = require('express');
+const path = require("path");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const {errorHandler} = require("./handlers/errorHandler");
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT;
+console.log(process.env.PORT);
 const server = express();
 
 server.use(cors());
