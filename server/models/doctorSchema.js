@@ -39,3 +39,6 @@ const doctorSchema = new Schema({
         default: "General",
     }
 });
+
+const Doctor = mongoose.model("Doctor", doctorSchema);
+module.exports = Doctor;
