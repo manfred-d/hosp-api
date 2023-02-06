@@ -1,13 +1,11 @@
 const express = require('express');
-const expressAsyncHandler = require('express-async-handler');
 const router = express.Router();
+const expressAsyncHandler = require("express-async-handler")
 
 
-
-
-router.post("/register1", expressAsyncHandler(async (req, res) => {
-    res.status(200).json({ "message": "This is register route for doctor" });
-}));
+router.post("/register1", async(req, res)=>{
+    res.status(200).json({message: "hello"})
+});
 
 
 router.post("/login", expressAsyncHandler(async (req, res) => {
@@ -16,9 +14,9 @@ router.post("/login", expressAsyncHandler(async (req, res) => {
 
 
 
-router.post("/register2", expressAsyncHandler(async (req, req) => {
+router.post("/register2", expressAsyncHandler(async (req, res) => {
     res.status(200).json({ message: " registration for the patient" });
 }));
 
 
-router.exports = router;
+module.exports = router;
