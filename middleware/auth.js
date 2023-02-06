@@ -20,7 +20,8 @@ exports.authenticate = asyncHandler(async (req, res, next) => {
         next();
     } catch (error) {
         return next(
-            new Err
+            new ErrorResponse("Bad request")
+
         )
     }
 
