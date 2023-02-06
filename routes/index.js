@@ -8,3 +8,6 @@ const patientRoute = require('./Patient');
 router.use("/doctor", doctorRoute);
 router.use("patient", patientRoute);
 router.use("/report", reportRoute);
+
+
+module.exports = router;
