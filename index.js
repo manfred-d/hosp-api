@@ -16,8 +16,10 @@ const PORT = process.env.PORT
 /*------------------------------------------end of setting up server----------------------------------------------*/
 /*------------------------------------------setting up database----------------------------------------------*/
 const connectDatabase = require('./database/config');
-connectDatabase();
+// connectDatabase();
 
+const route = require('./routes')
+app.use("/api", route)
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`.yellow.underline);
 });
