@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.set('setQuery', true);
+// mongoose.set('setQuery', true);
 
 const connectDatabase = async () => {
     try {
