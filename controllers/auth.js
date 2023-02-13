@@ -40,6 +40,13 @@ const patientRegister = expressAsyncHandler(async (req, res, next) => {
 
 
     if (!patient) {
-        const userPrompt = prompt 
+        const userPrompt = prompt("Patient Not found, Do you want to create one? (yes/no)");
+        if (userPrompt.toLowerCase() === "No") {
+            throw new Error("Patient Not found, Please Create");
+        } else if (userPrompt.toLowerCase === "Yes") {
+            patient =  await Patient.create(req.body)
+        } else {
+            throw new Error("Invalid Response")
+        }
     }
 });
