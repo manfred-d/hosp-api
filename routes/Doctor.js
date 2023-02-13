@@ -1,22 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const expressAsyncHandler = require("express-async-handler")
 
+// importing controller
+const {
+  getDoctor,
+  loginDoctor,
+  registerDoc,
+} = require("../controller/doctorController");
 
-router.post("/register1", async(req, res)=>{
-    res.status(200).json({message: "hello"})
-});
+// routes
+router.route("/").get(getDoctor);
+router.route("/register").post(registerDoc);
+router.route("/login").post(loginDoctor);
 
-
-router.post("/login", expressAsyncHandler(async (req, res) => {
-    res.status(200).json({message: " login route"})
-}));
-
-
-
-router.post("/register2", expressAsyncHandler(async (req, res) => {
-    res.status(200).json({ message: " registration for the patient" });
-}));
 
 
 module.exports = router;
