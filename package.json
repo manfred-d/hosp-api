@@ -7,10 +7,7 @@
     "start": "node server/index.js",
     "dev": "nodemon server/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Domains18/hosp-api.git"
-  },
+  "repository": "git+https://github.com/Domains18/hosp-api.git",
   "author": "Domains18",
   "license": "ISC",
   "bugs": {
@@ -32,5 +29,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }
+  },
+  "private": true
 }
