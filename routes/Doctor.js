@@ -4,14 +4,16 @@ const router = express.Router();
 // importing controller
 const {
   getDoctor,
-  loginDoctor,
-  registerDoc,
-} = require("../controller/doctorController");
+  createDoctor,
+  updateDoc,
+  deleteDoc,
+} = require("../controllers/doctorController");
 
 // routes
 router.route("/").get(getDoctor);
-router.route("/register").post(registerDoc);
-router.route("/login").post(loginDoctor);
+router.route("/update/:id").put(updateDoc);
+router.route("/create").post(createDoctor);
+router.route("/delete/:id").delete(deleteDoc);
 
 
 

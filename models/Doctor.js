@@ -1,14 +1,19 @@
 const mongoose = require("mongoose");
 const DoctorSchema = new mongoose.Schema(
   {
-    employement_id: {
+    employment_id: {
       type: Number,
-      required: true,
+      required: [true, "Please add reg number"],
     },
     name: {
       type: String,
       required: [true, "Please add your name"],
       min: 5,
+    },
+    email: {
+      type: String,
+      required: [true, "Please add enmail"],
+      unique: true,
     },
     position: {
       type: String,
