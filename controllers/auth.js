@@ -46,7 +46,13 @@ const patientRegister = expressAsyncHandler(async (req, res, next) => {
         } else if (userPrompt.toLowerCase === "Yes") {
             patient =  await Patient.create(req.body)
         } else {
-            throw new Error("Invalid Response")
+            throw new Error("Invalid Response");
         }
+    }
+
+    if (patient) {
+        res.status(200).json({
+            patient
+        });
     }
 });
