@@ -30,3 +30,21 @@ const saveReports = expressAsyncHandler(async (req, res) => {
         throw new Error(error);
     }
 });
+
+
+const downloadReports = expressAsyncHandler(async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        const filePath = path.join(__dirname,
+            `../public/uploads/${user.reports}`);
+        res.download(filePath);
+    } catch (error) {
+        res.status(400);
+        throw new Error(error);
+    }
+});
+
+module.exports = {
+    saveReports,
+    downloadReports
+}
