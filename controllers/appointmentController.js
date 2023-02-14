@@ -1,6 +1,7 @@
 const User = require("../models/userSchema");
 const Hospitals = require("../models/hospitalSchema");
 const Appointments = require("../models/appointmentSchema");
+const APP_ID = process.env.APP_ID;
 let https = require("https");
 
 const { sendNotification, playersId, externalUserId } = require("./notificationController.js");
@@ -86,7 +87,7 @@ const approveAppointment = expressAsyncHandler(async (req, res) => {
         });
 
         let message = {
-            app_id: "561ab6-221eaf44",
+            app_id: `${APP_ID}`,
             contents: {
                 en: ` Your Appointment Has been Scheduled Succesfully on ${req.body.appointDate},
                 with Doctor ${req.body.assignedDoc}, your token is ${req.body.token}`,
@@ -133,7 +134,7 @@ const getApprovedAppointment = expressAsyncHandler(async (req, res) => {
         });
         let id = "60er467j7jhdd748qw05";
         let message = {
-            app_id: "565rvb90 - 878venn4",
+            app_id: `${APP_ID}`,
             contents: {
                 en: ` You have an appointment scheduled for ${req.body.date} with ${req.body.assignedDoc}
                 `
@@ -162,7 +163,7 @@ const userIndividualAppointment = expressAsyncHandler(async (req, rea) => {
     try {
         const appointments = await Appointments.find({ patient: req.params.id });
         let message = {
-            app_id: "258etsxs-p93erdfr",
+            app_id: `${APP_ID}`,
             contents: {
                 en: " Apply Appointment to Hospitals Available"
             },
