@@ -276,3 +276,61 @@ const hospitalDetails = expressAsyncHandler(async (req, res) => {
         throw new Error(error);        
     }
 });
+
+
+const hospitalReview = expressAsyncHandler(async (req, res) => {
+    const { comment, userId, ratings, userName, profilePic} = await req.body;
+    try {        
+        const reviews = await Hospitals.findByIdAndUpdate(req.params.id, {
+            $push: {
+                reviews: {
+                    comment,
+                    userId,
+                    ratings,
+                    userName,
+                    profilePic,
+                }
+            }
+        }, { new: true });
+        res.status(200).json(reviews);
+    } catch (error) {
+        res.status(400);
+        throw new Error(error);
+    }
+});
+
+const allHospitalEvents = expressAsyncHandler(async (req, res) => {
+    try {
+        const hospitals = await Hospitals.findById().populate("events");
+        let allEventsId = [];
+        let allEvents = [];
+        for (const hospital of hospitals) {
+            if (hospital.events.length > 0) {
+                for(const event of hospital.events){
+                    allEventsId.push(event._id);
+                }
+            }
+        }
+        res.status(200).json(allEventsId);
+    } catch (error) {
+        
+    }
+});
+module.exports = {
+    registerHospital,
+    loginHospital,
+    individualHospital,
+    updateHospital,
+    addService,
+    addEvents,
+    addContacts,
+    addDoctors,
+    addBeds,
+    addVacancy,
+    bedTypes,
+    allDoctors,
+    hospitalDetails,
+    allHospitals,
+    hospitalReview,
+    allHospitalEvents,
+};
