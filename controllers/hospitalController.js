@@ -243,7 +243,36 @@ const addVacancy = expressAsyncHandler(async (req, res) => {
         });
         res.status(200).json(hospital);
     } catch (error) {
+        res.status(400);
         throw new Error(error);
     }
 });
 
+const bedTypes = expressAsyncHandler(async (req, res) => {
+    try {
+        const { icu, ventilator, other } = await req.body;
+        const hospital = await Hospitals.findByIdAndUpdate(req.params.id, {
+            $push: {
+                bedTypes: {
+                    icu,
+                    ventilator,
+                    other,
+                }
+            }
+        });
+        res.status(200).json(hospital);
+    } catch (error) {
+        res.status(400)
+        throw new Error(error);
+    }
+});
+
+const hospitalDetails = expressAsyncHandler(async (req, res) => {
+    try {
+        const hospital = await Hospitals.findById(req.params.id).select("-password");
+        res.status(200).json(hospital);
+    } catch (error) {
+        res.status(400)
+        throw new Error(error);        
+    }
+});
