@@ -100,3 +100,20 @@ const updateHospital = expressAsyncHandler(async (req, res) => {
     }
 });
 
+const addService = expressAsyncHandler(async (req, res) => {
+    try {
+        const { topic, desc, serviceCharge } = req.body;
+        const hospital = await Hospitals.findOneAndUpdate(req.params.id, {
+            $push: {
+                services: {
+                    topic,
+                    des,
+                    serviceCharge,
+                },
+            },
+        });
+        res.status(200).json(hospital);
+    } catch (error) {
+        throw new Error(error)
+    }
+});
