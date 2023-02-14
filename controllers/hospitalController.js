@@ -175,3 +175,17 @@ const addDoctors = expressAsyncHandler(async (req, res) => {
     } catch (error) {
     }
 });
+
+const allDoctors = expressAsyncHandler(async (req, res) => {
+    try {
+        const hospital = await Hospitals.findById(req.params.id).populate("doctors");
+        let a = [];
+        for (let i = 0; i < hospital.doctors.length; i++) {
+            const b = await Doctors.findById(hospital.doctors[i]).select("-docPassword");
+            a.push(b);
+        }
+        res.status().json(a);
+    } catch (error){
+        throw new Error(error);
+    }
+});
