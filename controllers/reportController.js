@@ -17,7 +17,16 @@ const saveReports = expressAsyncHandler(async (req, res) => {
             const filePath = path.join(__dirname,
                 `../public/uploads/${user.reports}`);
         }
+        fs.unlinkSync(filePath);
+        await User.findByIdAndUpdate(req.params.id, {
+            reports: req.file.filename
+        });
+        res.status(200).json({
+            success: true,
+            message: "Report updated successfully"
+        });
     } catch (error) {
-        
+        res.status(200);
+        throw new Error(error);
     }
 });
