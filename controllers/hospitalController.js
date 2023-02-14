@@ -3,6 +3,7 @@ const Doctors = require("../models/doctorSchema");
 
 const { sendNotification, playersId, externalUsersId } = require("./notificationController.js");
 const expressAsyncHandler = require("express-async-handler");
+const { updateParenthesizedType } = require("typescript");
 
 const registerHospital = expressAsyncHandler(async (req, res) => {
     try {
@@ -184,8 +185,65 @@ const allDoctors = expressAsyncHandler(async (req, res) => {
             const b = await Doctors.findById(hospital.doctors[i]).select("-docPassword");
             a.push(b);
         }
-        res.status().json(a);
+        res.status(200).json(a);
     } catch (error){
         throw new Error(error);
     }
 });
+
+
+const addContacts = expressAsyncHandler(async (req, res) => {
+    try {
+        const { name, number } = req.body;
+        const hospital = await Hospitals.findByIdAndUpdate(req.params.id, {
+            $push: {
+                emergencyContacts: {
+                    name,
+                    number,
+                },
+            },
+        });
+        res.status(200).json(hospital);
+    } catch (error) {
+        throw new Error(error)
+        // updateParenthesizedType
+    }
+});
+
+const addBeds = expressAsyncHandler(async (req, res) => {
+    try {
+        const { total, occupied, empty } = await req.body;
+        const hospital = await Hospitals.findByIdAndUpdate(req.params.id, {
+            $push: {
+                beds: {
+                    total,
+                    occupied,
+                    empty,
+                }
+            }
+        });
+        res.status(200).json(hospital);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
+const addVacancy = expressAsyncHandler(async (req, res) => {
+    try {
+        const { status, position, desc, salary } = await req.body;
+        const hospital = await Hospitals.findByIdAndUpdate(req.params.id, {
+            $push: {
+                vacancy: {
+                    status,
+                    position,
+                    amount,
+                    desc,
+                }
+            }
+        });
+        res.status(200).json(hospital);
+    } catch (error) {
+        throw new Error(error);
+    }
+});
+
