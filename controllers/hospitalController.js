@@ -103,7 +103,7 @@ const updateHospital = expressAsyncHandler(async (req, res) => {
 const addService = expressAsyncHandler(async (req, res) => {
     try {
         const { topic, desc, serviceCharge } = req.body;
-        const hospital = await Hospitals.findOneAndUpdate(req.params.id, {
+        const hospital = await Hospitals.findByIdAndUpdate(req.params.id, {
             $push: {
                 services: {
                     topic,
@@ -112,6 +112,25 @@ const addService = expressAsyncHandler(async (req, res) => {
                 },
             },
         });
+        res.status(200).json(hospital);
+    } catch (error) {
+        throw new Error(error)
+    }
+});
+
+const addEvents = expressAsyncHandler(async (req, res) => {
+    try {
+        const hospital = await Hospitals.findByIdAndUpdate(req.params.id, {
+            $push: {
+                events: {
+                    eventName: req.body.eventName,
+                    date: req.body.date,
+                    desc: req.body.desc,
+                    eventimg: req.body.eventimg,
+                }
+            }
+        });
+        await hospital.save();
         res.status(200).json(hospital);
     } catch (error) {
         throw new Error(error)
