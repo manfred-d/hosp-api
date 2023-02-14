@@ -136,3 +136,42 @@ const addEvents = expressAsyncHandler(async (req, res) => {
         throw new Error(error)
     }
 });
+//notification
+
+
+const addDoctors = expressAsyncHandler(async (req, res) => {
+    try {
+        const hospital = await Hospitals.findById(req.params.id);
+        const {
+            name,
+            exp,
+            spec,
+            contacts,
+            email,
+            date,
+            doctorId,
+            pic,
+            docPassword,
+        } = await req.body;
+        if(!name || !exp || !spec || !contacts || !email || !date || !doctorId || !pic || !docPassword){
+            res.status(400)
+            throw new Error("Please fill all the fields");
+        }
+        const newDoctor = new Doctors({
+            name,
+            exp,
+            spec,
+            contacts,
+            email,
+            date,
+            doctorId,
+            pic,
+            docPassword,
+        });
+        await newDoctor.save();
+        hospital.doctors.push(newDoctor._id);
+        await hospital.save();
+        res.status(200).json(hospital);
+    } catch (error) {
+    }
+});
