@@ -105,3 +105,114 @@ const approveAppointment = expressAsyncHandler(async (req, res) => {
         throw new Error(error);
     }
 });
+
+//followup with appointment
+const followUpAppointment = expressAsyncHandler(async (req, res) => {
+    try {
+        const doctor = req.body.doctorId;
+        if (doctor) {
+            const newDate = await Appointments.findByIdAndUpdate(req.params.id, {
+                folloUp: req.body.folloUp,
+                token: req.body.token,
+                docArrival: req.body.doctime,
+                assignedDoc: req.body.assignedDoc,
+                status: { pending: false, done: true, rejected: false},
+            });
+        }
+    } catch (error) {
+        res.status(200)
+        throw new Error(error)
+    }
+});
+
+//get Approved Appointment
+const getApprovedAppointment = expressAsyncHandler(async (req, res) => {
+    try {
+        const approvedAppointment = await Appointments.find({
+            "isDone" : true,
+        });
+        let id = "60er467j7jhdd748qw05";
+        let message = {
+            app_id: "565rvb90 - 878venn4",
+            contents: {
+                en: ` You have an appointment scheduled for ${req.body.date} with ${req.body.assignedDoc}
+                `
+            },
+        }
+        res.status(200).json(approvedAppointment);
+    } catch (error) {
+        //console.log(error)
+        res.status(400)
+        throw new Error(error)
+    }
+});
+//reject appointment
+const rejectAppointment = expressAsyncHandler(async (req, res) => {
+    try {
+        const appointment = await Appointments.findByIdAndUpdate(req.params.id, {
+            status: { pending: false, done: false, rejected: true},
+        });
+    } catch (error) {
+        res.status(400)
+        throw new Error(error)
+    }
+});
+
+const userIndividualAppointment = expressAsyncHandler(async (req, rea) => {
+    try {
+        const appointments = await Appointments.find({ patient: req.params.id });
+        let message = {
+            app_id: "258etsxs-p93erdfr",
+            contents: {
+                en: " Apply Appointment to Hospitals Available"
+            },
+            headings: {
+                en: " Doctor John Doe"
+            },
+            include_external_user_ids: externalUserId,
+        };
+        await sendNotification(message);
+        res.status(200).json(appointments);
+    } catch (error) {
+        res.status(400);
+        throw new Error(error)
+    }
+});
+
+const medicineDetails = expressAsyncHandler(async (req, res) => {
+    try {
+        const medInfo = await Appointments.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push: {
+                    medicines: {
+                        desc: req.body.desc,
+                        disease: req.body.disease,
+                        timeInterval: req.body.timeInterval,
+                        time: req.body.time,
+                    }
+                }
+            },
+            {
+                new: true,
+            }
+        );
+        res.status(200).json(medInfo);
+    } catch (error) {
+        res.status(400);
+        throw new Error(error)
+    }
+});
+
+
+module.exports = {
+    appointmentDetails,
+    eachAppointmentDetails,
+    eachHospitalAppointment,
+    approveAppointment,
+    rejectAppointment,
+    getApprovedAppointment,
+    userIndividualAppointment,
+    followUpAppointment,
+    medicineDetails
+};
