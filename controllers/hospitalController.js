@@ -9,7 +9,7 @@ const registerHospital = expressAsyncHandler(async (req, res) => {
         const { name, email, password, contact1, contact2 } = await req.body;
         const events = [];
         // data integrity
-        if(!name || !email || !password || !contact1) {
+        if (!name || !email || !password || !contact1) {
             res.status(400)
             throw new Error("Please fill all the fields");
         }
@@ -54,13 +54,49 @@ const loginHospital = expressAsyncHandler(async (req, res) => {
         }
         //check if hospital already exists
         const hospitalExists = await Hospitals.findOne({ email });
-        if(hospitalExists && (await hospitalExists.matchPassword(password))) {
+        if (hospitalExists && (await hospitalExists.matchPassword(password))) {
             res.status(200).json({
                 hospitalExists
             })
-        } else { res.status(400).json({message: "Invalid email or password"})}
+        } else { res.status(400).json({ message: "Invalid email or password" }) }
     } catch (error) {
         res.status(400)
         throw new Error(error)
     }
 });
+
+const allHospitals = expressAsyncHandler(async (req, res) => {
+    try {
+        const hospitals = await Hospitals.find({});
+        res.status(200).json({
+            hospitals,
+        });
+    } catch (error) {
+        res.status(400)
+        throw new Error(error)
+    }
+});
+
+const individualHospital = expressAsyncHandler(async (req, res) => {
+    try {
+        const hospital = await Hospitals.findById(req.params.id).select("-password");
+        res.status(200).json({
+            hospital,
+        });
+    } catch (error) {
+        res.status(400)
+        throw new Error(error)
+    }
+});
+
+const updateHospital = expressAsyncHandler(async (req, res) => {
+    try {
+        const hospital = await Hospitals.findById(req.params.id, {
+            $set: req.body,
+        });
+        res.status(200).json(hospital);
+    } catch (error) {
+        throw new Error(error)
+    }
+});
+
