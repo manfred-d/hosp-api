@@ -1,15 +1,17 @@
+const notFound = (req, res, next) => {
+    const error = new Error(`Not found - ${req.originalUrl}`);
+    res.status(400);
+    next(error);
 
-const ErrorResponse = require("../utils/errorResponse");
-
-const errorHandler = (err, req, res, next) => {
-    let error = { ...err };
-    error.message = err.message;
-
-    res.status(error.statusCode || 500).json({
-        success: false,
-        error: error.message || " Server Error"
-    });
 }
 
+const errorHandler = (err, req, res, next) => {
+    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+    res.status(statusCode);
+    res.json({
+        message: err.message,
+        stack: process.env.NDE_ENV == "production" ? null : err.stack
+    });
+};
 
-module.exports = errorHandler;
+module.exports = { notFound, errorHandler}
